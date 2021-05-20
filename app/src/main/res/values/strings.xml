@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">mes_medicaments</string>
+    <string-array name="instructions">
+        <item>avant le repas</item>
+        <item>au melieu du repas </item>
+        <item>aprés le repas</item>
+    </string-array>
+</resources>
