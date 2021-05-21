@@ -32,6 +32,7 @@ public class LoginActivity extends AppCompatActivity {
     LinearLayout signBtnsLayout;
     Dialog dialog;
     TextView test;
+    TextView test2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
