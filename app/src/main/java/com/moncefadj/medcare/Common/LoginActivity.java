@@ -14,6 +14,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
@@ -30,6 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     Button signUpBtn;
     LinearLayout signBtnsLayout;
     Dialog dialog;
+    TextView test;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
