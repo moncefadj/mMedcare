@@ -20,7 +20,7 @@
         android:text="ajouter un medicament "
         android:textAlignment="center"
         android:textAllCaps="false"
-        android:textColor="#000b76"
+        android:textColor="@color/blue_app"
         android:textSize="24sp"
         android:textStyle="bold" />
 
@@ -128,7 +128,7 @@
         android:background="@drawable/button_border"
         android:paddingBottom="10dp"
         android:text="ajouter l'heure de prise"
-        app:backgroundTint="#000b76" />
+        app:backgroundTint="@color/blue_app" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
