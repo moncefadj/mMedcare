@@ -1,5 +1,4 @@
 <resources>
-<<<<<<< HEAD
     <string name="app_name">MedCare</string>
 
     <!-- General Strings -->
@@ -40,7 +39,4 @@
     </string-array>
 
 
-=======
-    <string name="app_name">TestGithub</string>
->>>>>>> 82eb838 (testForGit activity)
 </resources>
