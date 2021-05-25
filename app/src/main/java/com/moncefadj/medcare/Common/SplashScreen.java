@@ -11,11 +11,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.moncefadj.medcare.Doctor.DoctorProfile;
 import com.moncefadj.medcare.R;
 
 public class SplashScreen extends AppCompatActivity {
 
-    private static int SPLASH_TIMER = 5000;
+    private static int SPLASH_TIMER = 4000;
 
     ImageView splashBg;
     TextView splashAppName;
@@ -58,9 +61,16 @@ public class SplashScreen extends AppCompatActivity {
                     finish();
 
                 } else {
-                    Intent intent = new Intent(SplashScreen.this, LoginActivity.class);
-                    startActivity(intent);
-                    finish();
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                    if (user != null) {
+                        Intent intent = new Intent(SplashScreen.this, DoctorProfile.class);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        Intent intent = new Intent(SplashScreen.this, LoginActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
                 }
 
 

@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MedCare">
-        <activity android:name=".Doctor.DoctorSignUp"
+        <activity android:name=".Doctor.DoctorProfile"></activity>
+        <activity
+            android:name=".Doctor.DoctorSignUp"
             android:windowSoftInputMode="stateVisible|adjustPan" />
         <activity
             android:name=".Patient.PatientSignUp"

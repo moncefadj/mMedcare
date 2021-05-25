@@ -1,5 +1,6 @@
 package com.moncefadj.medcare.Common;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
@@ -7,6 +8,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -14,73 +16,60 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.moncefadj.medcare.Doctor.DoctorProfile;
 import com.moncefadj.medcare.Doctor.DoctorSignUp;
-import com.moncefadj.medcare.HelperClasses.LoginFragmentAdapter;
 import com.moncefadj.medcare.Patient.PatientSignUp;
 import com.moncefadj.medcare.R;
 
 public class LoginActivity extends AppCompatActivity {
 
-    ViewPager viewPager;
-    TabLayout tabLayout;
-    public Button loginBtn;  // To access it from PatientLoginFragment and DoctorLoginFragment
+    Button loginBtn;
     Button signUpBtn;
     LinearLayout signBtnsLayout;
     Dialog dialog;
-    
+    FirebaseAuth fAuth;
+    TextInputLayout email,password;
+    String emailTxt,passwordTxt;
+    Button forgetPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        viewPager = findViewById(R.id.view_pager);
-        tabLayout = findViewById(R.id.tab_layout);
+
         loginBtn = findViewById(R.id.connexion);
         signUpBtn = findViewById(R.id.creer_compte);
         signBtnsLayout = findViewById(R.id.sign_btns_layout);
+        email = findViewById(R.id.email);
+        password = findViewById(R.id.password);
+        forgetPassword = findViewById(R.id.forget_password);
 
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.patient));
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.doctor));
 
-        // we have add this to switch to other tab when we just click on the tabs
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                viewPager.setCurrentItem(tab.getPosition());
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {  }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {  }
-        });
-
-        final LoginFragmentAdapter loginFragmentAdapter = new LoginFragmentAdapter(getSupportFragmentManager(), this, tabLayout.getTabCount());
-        viewPager.setAdapter(loginFragmentAdapter);
-
-        viewPager.addOnPageChangeListener( new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
         // animation for button and tabLayout
         loginBtn.setTranslationX(300);
         signUpBtn.setTranslationX(300);
         signBtnsLayout.setTranslationX(300);
-        tabLayout.setTranslationX(300);
+
 
         loginBtn.setAlpha(0);
         signUpBtn.setAlpha(0);
         signBtnsLayout.setAlpha(0);
-        tabLayout.setAlpha(0);
+
 
         loginBtn.animate().translationX(0).alpha(1).setDuration(1000).setStartDelay(400);
         signUpBtn.animate().translationX(0).alpha(1).setDuration(1000).setStartDelay(400);
         signBtnsLayout.animate().translationX(0).alpha(1).setDuration(1000).setStartDelay(400);
-        tabLayout.animate().translationX(0).alpha(1).setDuration(1000).setStartDelay(400);
+
 
         // ** Dialog ** to ask user if he is a doctor or patient when he want to signUp
         dialog = new Dialog(LoginActivity.this);
@@ -96,6 +85,14 @@ public class LoginActivity extends AppCompatActivity {
         Button patientBtn = dialog.findViewById(R.id.check_user_btn_patient);
         Button doctorBtn = dialog.findViewById(R.id.check_user_btn_doctor);
         ImageView cancelDialogBtn = dialog.findViewById(R.id.cancel_dialog_btn);
+
+
+        loginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                signInUser();
+            }
+        });
 
         signUpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,5 +124,46 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void signInUser() {
+
+        emailTxt = email.getEditText().getText().toString();
+        passwordTxt = password.getEditText().getText().toString();
+
+        clearErrors();   // this fun will clear the SetError (if it was appearing before) of all EditTexts
+
+        Log.i("Connexion msg", emailTxt);
+        Log.i("Connexion msg", passwordTxt);
+
+        if (emailTxt.isEmpty()) {
+            email.setError("l'Email est Obligatoire");
+            return;  // we will leave the onClick fun
+        }
+        if (passwordTxt.isEmpty()) {
+            password.setError("Mot de passe Obligatoire");
+            return;
+        }
+
+        fAuth = FirebaseAuth.getInstance();
+        fAuth.signInWithEmailAndPassword(emailTxt, passwordTxt).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+            @Override
+            public void onSuccess(AuthResult authResult) {
+                Toast.makeText(LoginActivity.this, "Connexion réussie", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(LoginActivity.this, DoctorProfile.class);
+                startActivity(intent);
+                finish();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void clearErrors() {
+        email.setError(null);
+        password.setError(null);
     }
 }
