@@ -14,7 +14,7 @@ import com.example.mes_medicaments.adapter.medAdapter;
 import com.example.mes_medicaments.models.medData;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-public class MainActivity extends AppCompatActivity {
+public class MedsActivity extends AppCompatActivity {
 
     private static final int ADD_MED_ACTIVITY = 0;
 
@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_meds);
 
         viewModel = new ViewModelProvider(this).get(MainViewModel.class);
         adapter =new medAdapter(this,viewModel);

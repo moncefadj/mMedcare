@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F1F5F8"
-    tools:context=".MainActivity">
+    tools:context=".MedsActivity">
 
 
     <TextView
@@ -32,7 +32,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@android:drawable/ic_input_add"
-        app:tint="#FFFF" />
+        app:tint="#FFFF"
+        android:layout_marginRight="16dp" />
 
 
     <androidx.recyclerview.widget.RecyclerView

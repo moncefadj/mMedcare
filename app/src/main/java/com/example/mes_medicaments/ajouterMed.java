@@ -89,10 +89,10 @@ public class ajouterMed extends AppCompatActivity implements TimePickerDialog.On
         String time2 = heure2.getText().toString();
 
         Intent intent = new Intent();
-        intent.putExtra(MainActivity.NAME, name);
-        intent.putExtra(MainActivity.DESCR, descrip);
-        intent.putExtra(MainActivity.TIME, time);
-        intent.putExtra(MainActivity.TIME2 , time2);
+        intent.putExtra(MedsActivity.NAME, name);
+        intent.putExtra(MedsActivity.DESCR, descrip);
+        intent.putExtra(MedsActivity.TIME, time);
+        intent.putExtra(MedsActivity.TIME2 , time2);
         setResult(RESULT_OK, intent);
         finish();
     }
